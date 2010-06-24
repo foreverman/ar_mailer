@@ -98,7 +98,7 @@ class ActionMailer::ARSendmail
   # to learn how to enable ActiveRecord::Timestamp.
 
   def self.mailq
-    emails = ActionMailer::Base.email_class.find :all
+    emails = ActionMailer::Base.email_class.all
 
     if emails.empty? then
       puts "Mail queue is empty"
@@ -123,7 +123,7 @@ class ActionMailer::ARSendmail
                   create_timestamp.strftime '%a %b %d %H:%M:%S'
                 end
 
-      puts "%10d %8d %s  %s" % [email.id, size, created, email.from]
+      puts "%s %8d %s  %s" % [email.id, size, created, email.from]
       if email.last_send_attempt > 0 then
         puts "Last send attempt: #{Time.at email.last_send_attempt}"
       end
@@ -347,9 +347,11 @@ class ActionMailer::ARSendmail
   def cleanup
     return if @max_age == 0
     timeout = Time.now - @max_age
-    conditions = ['last_send_attempt > 0 and created_on < ?', timeout]
+    #conditions = ['last_send_attempt > 0 and created_on < ?', timeout]
+    #:date   => { '$gte' => options[:days].days.ago.utc.beginning_of_day, '$lte' => Time.now.utc.end_of_day },
+    conditions = {:last_send_attempt => {'$gt' => 0}, :created_at => {'$lt' => timeout}}
     mail = ActionMailer::Base.email_class.destroy_all conditions
-
+    mail = [] if mail.nil?
     log "expired #{mail.length} emails from the queue"
   end
 
@@ -424,10 +426,14 @@ class ActionMailer::ARSendmail
   # last 300 seconds.
 
   def find_emails
-    options = { :conditions => ['last_send_attempt < ?', Time.now.to_i - 300] }
+#    options = { :conditions => ['last_send_attempt < ?', Time.now.to_i - 300] }
+ #   options[:limit] = batch_size unless batch_size.nil?
+    options = {:last_send_attempt => {'$lt' => Time.now.to_i - 300}}
     options[:limit] = batch_size unless batch_size.nil?
-    mail = ActionMailer::Base.email_class.find :all, options
-
+    # second_options = {} 
+    #    second_options[:limit] = batch_size unless batch_size.nil?
+    #mail = ActionMailer::Base.email_class.find :all, options, second_options
+    mail = ActionMailer::Base.email_class.all options
     log "found #{mail.length} emails to send"
     mail
   end
@@ -460,7 +466,7 @@ class ActionMailer::ARSendmail
         cleanup
         emails = find_emails
         deliver(emails) unless emails.empty?
-      rescue ActiveRecord::Transactions::TransactionError
+      rescue 
       end
       break if @once
       sleep @delay
