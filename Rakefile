@@ -8,7 +8,7 @@ $:.unshift(File.expand_path(File.dirname(__FILE__) + '/lib'))
 require './lib/action_mailer/ar_sendmail'
 
 ar_mailer_gemspec = Gem::Specification.new do |s|
-  s.name = %q{adzap-ar_mailer}
+  s.name = %q{foreverman-ar_mailer}
   s.version = ActionMailer::ARSendmail::VERSION
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Eric Hodel", "Adam Meehan"]
@@ -26,7 +26,7 @@ ar_mailer_gemspec = Gem::Specification.new do |s|
     "generators/ar_mailer/ar_mailer_generator.rb",
     "generators/ar_mailer/templates/migration.rb",
     "generators/ar_mailer/templates/model.rb",
-    "lib/adzap-ar_mailer.rb",
+    "lib/foreverman-ar_mailer.rb",
     "lib/action_mailer/ar_mailer.rb",
     "lib/action_mailer/ar_sendmail.rb",
     "lib/smtp_tls.rb",
@@ -39,7 +39,7 @@ ar_mailer_gemspec = Gem::Specification.new do |s|
     "test/test_helper.rb"
   ]
   s.has_rdoc = true
-  s.homepage = %q{http://github.com/adzap/ar_mailer}
+  s.homepage = %q{http://github.com/foreverman/ar_mailer}
   s.rdoc_options = ["--main", "README.rdoc"]
   s.require_paths = ["lib"]
   s.rubyforge_project = %q{seattlerb}
@@ -55,7 +55,7 @@ end
 
 desc "Update ar_mailer.gemspec"
 task :make_spec do
-  File.open("adzap-ar_mailer.gemspec", "w") do |f|
+  File.open("foreverman-ar_mailer.gemspec", "w") do |f|
     f.puts(ar_mailer_gemspec.to_ruby)
   end
 end

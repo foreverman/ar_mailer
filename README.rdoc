@@ -12,7 +12,7 @@ http://seattlerb.org/ar_mailer
 
 and for forked additions
 
-http://github.com/adzap/ar_mailer/wikis
+http://github.com/foreverman/ar_mailer/wikis
 
 Bugs:
 
@@ -32,15 +32,15 @@ Before installing you will need to make sure the original gem is uninstalled as 
 
 Then
 
-  $ sudo gem install adzap-ar_mailer
+  $ sudo gem install foreverman-ar_mailer
 
 For Rails >= 2.1, in your environment.rb:
 
-  config.gem "adzap-ar_mailer", :lib => 'action_mailer/ar_mailer'
+  config.gem "foreverman-ar_mailer", :lib => 'action_mailer/ar_mailer'
 
   # or since version 2.1.7 of this gem you can now just do
 
-  config.gem "adzap-ar_mailer"
+  config.gem "foreverman-ar_mailer"
 
 For Rails 2.0, in an initializer file:
 

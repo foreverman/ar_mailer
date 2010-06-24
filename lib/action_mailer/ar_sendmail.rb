@@ -237,7 +237,7 @@ class ActionMailer::ARSendmail
       end
 
       opts.on("--version", "Version of ARMailer") do
-        usage "ar_mailer #{VERSION} (adzap fork)"
+        usage "ar_mailer #{VERSION} (foreverman fork)"
       end
 
       opts.separator ''
