@@ -380,7 +380,7 @@ class ActionMailer::ARSendmail
         begin
           res = session.send_message email.mail, email.from, email.to
           email.destroy
-          log "sent email %011d from %s to %s: %p" %
+          log "sent email %s from %s to %s: %p" %
                 [email.id, email.from, email.to, res]
         rescue Net::SMTPFatalError => e
           log "5xx error sending email %d, removing from queue: %p(%s):\n\t%s" %
